@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: batch
+  datasource:
+    batch:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/BATCH?serverTimezone=Asia/Seoul&autoReconnection=true&useUnicode=true&characterEncoding=utf8&useSSL=false&rewriteBatchedStatements=true
+      username: root
+      password: password
+    service:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/SERVICE?serverTimezone=Asia/Seoul&autoReconnection=true&useUnicode=true&characterEncoding=utf8&useSSL=false&rewriteBatchedStatements=true
+      username: root
+      password: password
+  jpa:
+    generate-ddl: false
+    open-in-view: false
+    properties:
+      hibernate:
+        show-sql: true
+        globally_quoted_identifiers: true
+        physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+  batch:
+    job:
+      enabled: true
+
+logging:
+  config: classpath:log4j2.xml
+  level:
+    org.hibernate.orm.jdbc.bind: trace

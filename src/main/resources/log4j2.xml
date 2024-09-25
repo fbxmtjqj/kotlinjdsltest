@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="layoutPattern">
+            %d %-5level [%t] %c{36}(%L) : %msg%n%throwable
+        </Property>
+    </Properties>
+
+    <!-- 생성 파일 정보 -->
+    <Appenders>
+        <Console name="Console_Appender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${layoutPattern}"/>
+        </Console>
+
+        <RollingFile name="File_Appender"
+                     fileName="./logs/app.log"
+                     filePattern="./logs/app_%d{yyyy-MM-dd}_%i.log.gz">
+            <PatternLayout pattern="${layoutPattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+    </Appenders>
+
+    <!-- 로그 범위  -->
+    <Loggers>
+        <!-- Spring log  -->
+        <Logger name="org.springframework" additivity="false" level="INFO">
+            <AppenderRef ref="File_Appender"/>
+            <AppenderRef ref="Console_Appender"/>
+        </Logger>
+
+        <!-- Project log -->
+        <logger name="com.fbxmtjqj" additivity="false" level="DEBUG">
+            <AppenderRef ref="File_Appender"/>
+            <AppenderRef ref="Console_Appender"/>
+        </logger>
+
+        <Logger name="org.hibernate.orm.jdbc.bind" level="TRACE" additivity="false">
+            <AppenderRef ref="File_Appender"/>
+            <AppenderRef ref="Console_Appender"/>
+        </Logger>
+
+        <Logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+            <AppenderRef ref="File_Appender"/>
+            <AppenderRef ref="Console_Appender"/>
+        </Logger>
+
+        <!-- Default 세팅 -->
+        <root additivity="false" level="OFF">
+            <AppenderRef ref="File_Appender"/>
+            <AppenderRef ref="Console_Appender"/>
+        </root>
+    </Loggers>
+</Configuration>
